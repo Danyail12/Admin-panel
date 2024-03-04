@@ -22,7 +22,7 @@ const Course = () => {
     const fetchCourses = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/v1/course`);
+        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/course`);
         
         if (response.data.success) {
           setCourses(response.data.courses);
@@ -42,7 +42,7 @@ const Course = () => {
   }, []);
   const handleAddLecture = async (id) => {
     try {
-      const response = await axios.post(`http://localhost:5000/course/${id}`, {
+      const response = await axios.post(`https://kukuk-backend-ealq.vercel.app/api/v1/course/${id}`, {
         title: lectureData.title,
         description: lectureData.description,
       });
@@ -63,7 +63,7 @@ const Course = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/api/v1/deleteCourse/${id}`)
+      .delete(`https://kukuk-backend-ealq.vercel.app/api/v1/deleteCourse/${id}`)
       .then((response) => {
         if (response.data) {
           setCourses(courses.filter((course) => course._id !== id));

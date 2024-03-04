@@ -45,7 +45,7 @@ const New = ({ inputs, title }) => {
         
         // Make a POST request to your backend API
         const response = await axios.post(
-          "http://localhost:5000/api/v1/admin/createExpert",
+          "https://kukuk-backend-ealq.vercel.app/api/v1/admin/createExpert",
           formData ,
           {
             headers: {

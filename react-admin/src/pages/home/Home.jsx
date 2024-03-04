@@ -15,7 +15,7 @@ const Home = () => {
   useEffect(() => {
     const fetchTotalData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/admin/totalData');
+        const response = await axios.get('https://kukuk-backend-ealq.vercel.app/api/v1/admin/totalData');
         setTotalData(response.data);
         console.log(response.data);
       } catch (error) {

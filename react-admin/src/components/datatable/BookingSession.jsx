@@ -17,7 +17,7 @@ const BookingSessionData = () => {
     const fetchBookingSessions = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/v1/admin/expert/${expertId}/booking-sessions`);
+        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/admin/expert/${expertId}/booking-sessions`);
         
         if (response.data.success) {
           setBookingSessions(response.data.bookingSessions);

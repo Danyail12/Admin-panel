@@ -34,7 +34,7 @@ export default function SignIn() {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:5000/api/v1/login",
+        "https://kukuk-backend-ealq.vercel.app/api/v1/login",
         user,
         {
           headers: {

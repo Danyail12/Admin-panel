@@ -23,7 +23,7 @@ const Booking = () => {
     const fetchBookingSessions = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/v1/ebook`);
+        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/ebook`);
         
         if (response.data.success) {
           setBookingSessions(response.data.eBook);
@@ -44,7 +44,7 @@ const Booking = () => {
 
   const handleAddLecture = async (id) => {
     try {
-      const response = await axios.post(`http://localhost:5000/ebook/${id}`, {
+      const response = await axios.post(`https://kukuk-backend-ealq.vercel.app/api/v1/ebook/${id}`, {
         title: lectureData.title,
         description: lectureData.description,
       });
@@ -65,7 +65,7 @@ const Booking = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/api/v1/deleteEbook/${id}`)
+      .delete(`https://kukuk-backend-ealq.vercel.app/api/v1/deleteEbook/${id}`)
       .then((response) => {
         if (response.data) {
           setBookingSessions(bookingSessions.filter((bookingSession) => bookingSession._id !== id));

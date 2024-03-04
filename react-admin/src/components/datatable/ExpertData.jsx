@@ -19,7 +19,7 @@ const ExpertData = () => {
     const fetchExperts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/v1/getExperts');
+        const response = await axios.get('https://kukuk-backend-ealq.vercel.app/api/v1/getExperts');
         if (response.data) {
           setExperts(response.data);
           console.log('Response:', response.data);
@@ -40,7 +40,7 @@ const ExpertData = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/api/v1/admin/expert/${id}`)
+      .delete(`https://kukuk-backend-ealq.vercel.app/api/v1/admin/expert/${id}`)
       .then((response) => {
         if (response.data) {
           setExperts(experts.filter((expert) => expert._id !== id));

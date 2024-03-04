@@ -14,6 +14,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
+import { Button } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 import axios from "axios";
 import { Book, CountertopsRounded, GolfCourse } from "@mui/icons-material";
@@ -31,7 +32,7 @@ const Sidebar = () => {
   
   const handleLogout = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/v1/logout");
+      const response = await axios.get("https://kukuk-backend-ealq.vercel.app/api/v1/logout");
 
       // Remove the token from localStorage or your authentication state
       localStorage.removeItem("token");
@@ -117,8 +118,9 @@ const Sidebar = () => {
           </li>
           <li>
             <ExitToAppIcon className="icon" />
-            <span>{t('logout')}</span>
-            <button onClick={handleLogout}>{t('logout')}</button>
+            <span onClick={handleLogout}>{t('logout')}
+            {/* <Button variant="contained" >{t('logout')}</Button> */}
+            </span>
           </li>
           </ul>
         </ul>

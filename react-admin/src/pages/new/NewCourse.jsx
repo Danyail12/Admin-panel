@@ -27,7 +27,7 @@ const NewCourse = ({ inputs, title }) => {
       e.preventDefault();
       console.log("courseId:", id);
         try {
-          const response = await axios.post(`http://localhost:5000/api/v1/course/${id}`,
+          const response = await axios.post(`https://kukuk-backend-ealq.vercel.app/api/v1/course/${id}`,
             lectureData,
         {
           headers: {

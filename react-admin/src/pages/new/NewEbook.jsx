@@ -34,7 +34,7 @@ const NewEbook = ({ inputs, title }) => {
       // const yourAuthToken = `Bearer ${authToken}`;
       
       const response = await axios.post(
-        `http://localhost:5000/api/v1/ebook/${id}`,
+        `https://kukuk-backend-ealq.vercel.app/api/v1/ebook/${id}`,
         lectureData,
         {
           headers: {

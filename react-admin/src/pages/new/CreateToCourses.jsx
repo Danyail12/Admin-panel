@@ -38,7 +38,7 @@ const CreateToCourses = ({ inputs, title }) => {
       
       // Make a POST request to your backend API
       const response = await axios.post(
-        "http://localhost:5000/api/v1/createcourse",
+        "https://kukuk-backend-ealq.vercel.app/api/v1/createcourse",
         formData ,
         {
           headers: {
