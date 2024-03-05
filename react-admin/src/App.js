@@ -20,6 +20,9 @@ import { productInputs, userInputs,ExpertInputs,addToLectureInputs,CreateInputs 
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import Protected from "./components/Protected";
+import OnlineInspectio from "./components/datatable/OnsiteInspection";
+import OnlineInspection from "../../kukuk-backend/models/onlineInspection";
+import OnsiteInspection from "../../kukuk-backend/models/onsiteInspection";
 
 
 function App() {
@@ -85,7 +88,18 @@ function App() {
               <Route path=":id" element={<NewCourse inputs={addToLectureInputs} title="Add New Courses" />} />
 
             </Route>
-</Route>
+            <Route path="onlineInspection">
+              <Route index element={<Protected><OnlineInspection /></Protected>}/>
+             
+
+            </Route>
+            <Route path="onsiteInspection">
+              <Route index element={<Protected><OnsiteInspection /></Protected>}/>
+             
+
+            </Route>
+
+  </Route>
         </Routes>
       </Router>
     </div>
