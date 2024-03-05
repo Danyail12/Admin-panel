@@ -120,4 +120,4 @@ const OnlineInspection = () => {
   );
 };
 
-export default OnlineInspectio;
+export default OnlineInspection;
