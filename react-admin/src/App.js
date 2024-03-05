@@ -20,10 +20,8 @@ import { productInputs, userInputs,ExpertInputs,addToLectureInputs,CreateInputs 
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import Protected from "./components/Protected";
-import OnlineInspectio from "./components/datatable/OnsiteInspection";
-import OnlineInspection from "../../kukuk-backend/models/onlineInspection";
-import OnsiteInspection from "../../kukuk-backend/models/onsiteInspection";
-
+import OnsiteInspection from "./components/datatable/OnsiteInspection";
+import Online from "./components/datatable/Online"; 
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -89,7 +87,7 @@ function App() {
 
             </Route>
             <Route path="onlineInspection">
-              <Route index element={<Protected><OnlineInspection /></Protected>}/>
+              <Route index element={<Protected><Online/></Protected>}/>
              
 
             </Route>
