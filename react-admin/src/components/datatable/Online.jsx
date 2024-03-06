@@ -17,7 +17,7 @@ const Online = () => {
     const fetchBookingSessions = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/admin/OnlineInspection`);
+        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/admin/getAllOnlineInspection`);
         
         if (response.data.success) {
           setBookingSessions(response.data.onlineInspection);
