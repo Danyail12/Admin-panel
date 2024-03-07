@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { Button } from "@mui/material";
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {API_BASE_URL} from "../../api"
+import Checkbox from '@mui/material/Checkbox';
 import axios from 'axios';
 
 const Course = () => {
@@ -22,7 +24,7 @@ const Course = () => {
     const fetchCourses = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/course`);
+        const response = await axios.get(`${API_BASE_URL}course`);
         
         if (response.data.success) {
           setCourses(response.data.courses);
@@ -42,7 +44,7 @@ const Course = () => {
   }, []);
   const handleAddLecture = async (id) => {
     try {
-      const response = await axios.post(`https://kukuk-backend-ealq.vercel.app/api/v1/course/${id}`, {
+      const response = await axios.post(`${API_BASE_URL}course/${id}`, {
         title: lectureData.title,
         description: lectureData.description,
       });
@@ -63,7 +65,7 @@ const Course = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`https://kukuk-backend-ealq.vercel.app/api/v1/deleteCourse/${id}`)
+      .delete(`${API_BASE_URL}deleteCourse/${id}`)
       .then((response) => {
         if (response.data) {
           setCourses(courses.filter((course) => course._id !== id));
@@ -76,8 +78,46 @@ const Course = () => {
         setError("Error deleting course");
       });
   }
+  const [selectedRows, setSelectedRows] = useState([]);
 
+  const handleSelectionChange = (selectedIds) => {
+    setSelectedRows(selectedIds);
+  };
+
+  const handleMultipleDelete = () => {
+    axios
+      .delete(`${API_BASE_URL}admin/multipleDeleteForCourses`, { data: { ids: selectedRows } })
+      .then((response) => {
+        if (response.data.success) {
+          const updatedCourses = courses.filter(course => !selectedRows.includes(course._id));
+          setCourses(updatedCourses);
+        } else {
+          setError(response.data.message || "Error deleting courses");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting courses:", error);
+        setError("Error deleting courses");
+      });
+  };
+ 
   const columns = [
+    {
+      field: "selection",
+      headerName: "Selection",
+      width: 100,
+      renderHeader: (params) => (
+        <Checkbox
+          onChange={(e) => handleSelectionChange(e.target.checked ? courses.map((course) => course._id) : [])}
+        />
+      ),
+      renderCell: (params) => (
+        <Checkbox
+          checked={selectedRows.includes(params.row._id)}
+          onChange={(e) => handleSelectionChange(e.target.checked ? [...selectedRows, params.row._id] : selectedRows.filter((id) => id !== params.row._id))}
+        />
+      ),
+    },
     { field: '_id', headerName: 'ID', width: 200 },
     { field: 'name', headerName: 'Name', width: 200 },
     { field: 'description', headerName: 'Description', width: 200 },
@@ -134,12 +174,19 @@ const Course = () => {
       <Navbar />
       <div className="top">
     <div className="datatable" style={{ height: 800, width: '100%', marginTop: 20 }}>
-      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#1976d2', color: 'white' }}>All Courses
-      <Button variant=" contained" className="button" size="medium" >
-
-<Link to="/course/createcourse" style={{ textDecoration: "none" }}>Create New Course</Link>
-</Button>
+      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center',  color: 'black' , fontSize: 30, fontWeight: 'bold' }}>
+      
+      Courses Data
       </div>
+      <Button variant="contained" color="info"   className="button " size="small" style={{ marginLeft: 20 }}  >
+
+<Link to="/course/createcourse" style={{ textDecoration: "none",color: 'white' }}>Create New Course</Link>
+</Button>
+<IconButton aria-label="delete">
+    <DeleteIcon 
+  onClick={() => handleMultipleDelete()}
+    />
+  </IconButton>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (

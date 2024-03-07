@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../navbar/Navbar';
 import Sidebar from '../sidebar/Sidebar';
-
+import {API_BASE_URL} from "../../api"
 import { DataGrid } from '@mui/x-data-grid';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 const Online = () => {
   const [bookingSessions, setBookingSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { t } = useTranslation();
   const { expertId } = useParams(); // Get expertId from route parameters
 
   useEffect(() => {
     const fetchBookingSessions = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/admin/getAllOnlineInspection`);
+        const response = await axios.get(`${API_BASE_URL}admin/getAllOnlineInspection`);
         
         if (response.data.success) {
           setBookingSessions(response.data.onlineInspection);
@@ -37,30 +38,31 @@ const Online = () => {
   }, [expertId]);
 
   const columns = [
-    { field: '_id', headerName: 'ID', width: 200 },
-    { field: 'make', headerName: 'Make', width: 200 },
-    { field: 'model', headerName: 'Model', width: 200 },
-    { field: 'year', headerName: 'Year', width: 200 },
-    { field: 'vechicleVin', headerName: 'Vehicle VIN', width: 200 },
-    { field: 'body', headerName: 'Body', width: 200 },
-    { field: 'licensePlates', headerName: 'License Plates', width: 200 },
-    { field: 'handTruck', headerName: 'Hand Truck', width: 200 },
-    { field: 'glass', headerName: 'Glass', width: 200 },
-    { field: 'wiperBlades', headerName: 'Wiper Blades', width: 200 },
-    { field: 'Reflectors', headerName: 'Reflectors', width: 200 },
-    { field: 'mudFlaps', headerName: 'Mud Flaps', width: 200 },
-    { field: 'racking', headerName: 'Racking', width: 200 },
-    { field: 'coldCurtains', headerName: 'Cold Curtains', width: 200 },
-    { field: 'doorIssues', headerName: 'Door Issues', width: 200 },
-    { field: 'insurance', headerName: 'Insurance', width: 200 },
-    { field: 'headlights', headerName: 'Headlights', width: 200 },
-    { field: 'turnsignals', headerName: 'Turn Signals', width: 200 },
-    { field: 'makerlights', headerName: 'Maker Lights', width: 200 },
-    { field: 'brakeLights', headerName: 'Brake Lights', width: 200 },
-    { field: 'carImages', headerName: 'Car Images', width: 200 },
-    { field: 'RegistrationImages', headerName: 'Registration Images', width: 200 },
-    { field: 'Documents', headerName: 'Documents', width: 200 },
+    { field: '_id', headerName:t('id'), width: 200 },
+    { field: 'make', headerName: t('columns.make'), width: 200 },
+    { field: 'model', headerName: t('columns.model'), width: 200 },
+    { field: 'year', headerName: t('columns.year'), width: 200 },
+    { field: 'vehicleVin', headerName: t('columns.vehicleVin'), width: 200 },
+    { field: 'body', headerName: t('columns.body'), width: 200 },
+    { field: 'licensePlates', headerName: t('columns.licensePlates'), width: 200 },
+    { field: 'handTruck', headerName: t('columns.handTruck'), width: 200 },
+    { field: 'glass', headerName: t('columns.glass'), width: 200 },
+    { field: 'wiperBlades', headerName: t('columns.wiperBlades'), width: 200 },
+    { field: 'reflectors', headerName: t('columns.reflectors'), width: 200 },
+    { field: 'mudFlaps', headerName: t('columns.mudFlaps'), width: 200 },
+    { field: 'racking', headerName: t('columns.racking'), width: 200 },
+    { field: 'coldCurtains', headerName: t('columns.coldCurtains'), width: 200 },
+    { field: 'doorIssues', headerName: t('columns.doorIssues'), width: 200 },
+    { field: 'insurance', headerName: t('columns.insurance'), width: 200 },
+    { field: 'headlights', headerName: t('columns.headlights'), width: 200 },
+    { field: 'turnSignals', headerName: t('columns.turnSignals'), width: 200 },
+    { field: 'makerLights', headerName: t('columns.makerLights'), width: 200 },
+    { field: 'brakeLights', headerName: t('columns.brakeLights'), width: 200 },
+    { field: 'carImages', headerName: t('columns.carImages'), width: 200 },
+    { field: 'registrationImages', headerName: t('columns.registrationImages'), width: 200 },
+    { field: 'documents', headerName: t('columns.documents'), width: 200 },
   ];
+
   
 
   return (
@@ -70,7 +72,7 @@ const Online = () => {
       <Navbar />
       <div className="top">
     <div className="datatable" style={{ height: 800 , width: '100%', marginTop: 20 }}>
-      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#1976d2', color: 'white' }}>All Online Inspection Data </div>
+      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center',  alignItems: 'center', color: 'black' ,fontSize: 30, fontWeight: 'bold' }}>All Online Inspection Data </div>
    
       {loading ? (
         <p>Loading...</p>

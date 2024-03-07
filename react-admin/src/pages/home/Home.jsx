@@ -6,6 +6,7 @@ import Featured from "../../components/featured/Featured";
 import Chart from "../../components/chart/Chart";
 import Table from "../../components/table/Table";
 import { useTranslation } from 'react-i18next';
+import {API_BASE_URL} from "../../api"
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
@@ -15,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const fetchTotalData = async () => {
       try {
-        const response = await axios.get('https://kukuk-backend-ealq.vercel.app/api/v1/admin/totalData');
+        const response = await axios.get(`${API_BASE_URL}admin/totalData`);
         setTotalData(response.data);
         console.log(response.data);
       } catch (error) {

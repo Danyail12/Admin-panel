@@ -10,6 +10,9 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
+import {API_BASE_URL} from "../../api"
+
+
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -33,8 +36,7 @@ export default function SignIn() {
   const handleLogin = async (e) => {
     try {
       e.preventDefault();
-      const response = await axios.post(
-        "https://kukuk-backend-ealq.vercel.app/api/v1/login",
+      const response = await axios.post(`${API_BASE_URL}login`,
         user,
         {
           headers: {
@@ -43,20 +45,26 @@ export default function SignIn() {
         }
       );
 
-      if (response.data.success === true && response.data.user.role==="admin") {
+      if (response.data.success === true) {
         const responseData = response.data;
         console.log("after login: ", responseData);
-        saveTokenInLocalStr(responseData.user.token);
-
-        setUser({ email: "", password: "" });
-        navigate("/");
-      }else{
-        alert("your not admin");
+        
+        if (responseData.user.role === "admin") {
+          saveTokenInLocalStr(responseData.user.token);
+          setUser({ email: "", password: "" });
+          navigate("/");
+        } else {
+          // Non-admin user login
+          alert("You are not an admin. Please log in as an admin.");
+        }
+      } else {
+        // Unsuccessful login
+        alert("Incorrect email or password. Please try again.");
       }
-
-      // console.log(response.data.message);
+  
     } catch (error) {
       console.error("Login error:", error);
+      alert("Login failed. Please try again.");
     }
   };
 

@@ -4,6 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {API_BASE_URL} from "../../api"
 import axios from "axios";
 
 const CreateToCourses = ({ inputs, title }) => {
@@ -38,7 +39,7 @@ const CreateToCourses = ({ inputs, title }) => {
       
       // Make a POST request to your backend API
       const response = await axios.post(
-        "https://kukuk-backend-ealq.vercel.app/api/v1/createcourse",
+        `${API_BASE_URL}createcourse`,
         formData ,
         {
           headers: {

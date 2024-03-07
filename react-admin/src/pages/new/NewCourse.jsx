@@ -4,6 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
+import {API_BASE_URL} from "../../api"
 import axios from 'axios';
 
 const NewCourse = ({ inputs, title }) => {
@@ -27,7 +28,7 @@ const NewCourse = ({ inputs, title }) => {
       e.preventDefault();
       console.log("courseId:", id);
         try {
-          const response = await axios.post(`https://kukuk-backend-ealq.vercel.app/api/v1/course/${id}`,
+          const response = await axios.post(`${API_BASE_URL}course/${id}`,
             lectureData,
         {
           headers: {

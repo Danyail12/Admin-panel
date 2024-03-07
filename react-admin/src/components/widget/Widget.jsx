@@ -6,11 +6,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import {API_BASE_URL} from "../../api"
 import axios from 'axios';
-
-// ... (imports)
-
-// ... (imports)
 
 const Widget = ({ type }) => {
   let data;
@@ -21,7 +18,7 @@ const Widget = ({ type }) => {
   useEffect(() => {
     const fetchTotalData = async () => {
       try {
-        const response = await axios.get('https://kukuk-backend-ealq.vercel.app/api/v1/admin/totalData');
+        const response = await axios.get(`${API_BASE_URL}admin/totalData`);
         setTotalData(response.data);
         // console.log(response.data);
       } catch (error) {
@@ -37,7 +34,7 @@ const Widget = ({ type }) => {
       data = {
         title: t('users'),
         isMoney: false,
-        link: "See all users",
+        link: "Total users",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -54,7 +51,7 @@ const Widget = ({ type }) => {
       data = {
         title: t('expert'),
         isMoney: false,
-        link: "See all experts",
+        link: "Total experts",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -71,7 +68,7 @@ const Widget = ({ type }) => {
       data = {
         title: t('ebooks'),
         isMoney: false,
-        link: "See all ebooks",
+        link: "Total ebooks",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -88,7 +85,7 @@ const Widget = ({ type }) => {
       data = {
         title: t('BookingSessions'),
         isMoney: false,
-        link: "See all Booking Sessions",
+        link: "Total Sessions",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -105,7 +102,7 @@ const Widget = ({ type }) => {
       data = {
         title: t('online Inspections'),
         isMoney: false,
-        link: "See all online inspections",
+        link: "Total online inspections",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -122,7 +119,7 @@ const Widget = ({ type }) => {
       data = {
         title: t('Online Inspections'),
         isMoney: false,
-        link: "See all onsite inspections",
+        link: "Total onsite inspections",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -139,7 +136,7 @@ const Widget = ({ type }) => {
       data = {
         title: t('Pocket Garrage'),
         isMoney: false,
-        link: "See all Pocket Garrage",
+        link: "Total Pocket Garrage",
         icon: (
           <PersonOutlinedIcon
             className="icon"

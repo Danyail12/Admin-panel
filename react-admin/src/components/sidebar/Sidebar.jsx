@@ -18,7 +18,7 @@ import { Button } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 import axios from "axios";
 import { Book, CountertopsRounded, GolfCourse } from "@mui/icons-material";
-// import { useHistory } from "react-router";
+import { API_BASE_URL } from "../../api";
 
 
 
@@ -32,7 +32,7 @@ const Sidebar = () => {
   
   const handleLogout = async () => {
     try {
-      const response = await axios.get("https://kukuk-backend-ealq.vercel.app/api/v1/logout");
+      const response = await axios.get(`${API_BASE_URL}logout`);
 
       // Remove the token from localStorage or your authentication state
       localStorage.removeItem("token");
@@ -78,7 +78,7 @@ const Sidebar = () => {
               <span>{t('expert')}</span>
             </li>
           </Link>
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/product" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>{t('products')}</span>
@@ -99,18 +99,30 @@ const Sidebar = () => {
          
           {/* ... your existing code */}
           <p className="title">{t('SERVICE')}</p>
+          <Link to="/pocket" style={{ textDecoration: "none" }}>
+          <li>
+            <CountertopsRounded className="icon" />
+            <span>{t('pocketGarrage')}</span>
+          </li>
+          </Link>
+          {/* <Link to="/coursesService" style={{ textDecoration: "none" }}>
           <li>
             <CountertopsRounded className="icon" />
             <span>{t('coursesService')}</span>
-          </li>
+          </li> */}
+          {/* </Link> */}
+          <Link to="/onlineInspection" style={{ textDecoration: "none" }}>
           <li>
             <PsychologyOutlinedIcon className="icon" />
             <span>{t('onlineInspection')}</span>
           </li>
+          </Link>
+          <Link to="/onSiteInspection" style={{ textDecoration: "none" }}>
           <li>
             <SettingsApplicationsIcon className="icon" />
             <span>{t('onsiteInspection')}</span>
           </li>
+          </Link>
           <p className="title">{t('USER')}</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />

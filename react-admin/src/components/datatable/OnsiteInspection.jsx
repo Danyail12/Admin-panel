@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../navbar/Navbar';
 import Sidebar from '../sidebar/Sidebar';
-
+import { API_BASE_URL } from '../../api';
 import axios from 'axios';
 
 const OnlineInspection = () => {
   const [bookingSessions, setBookingSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { t } = useTranslation();
   const { expertId } = useParams(); // Get expertId from route parameters
 
   useEffect(() => {
     const fetchBookingSessions = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/admin/getAllOnsiteInspection`);
-        
+        const response = await axios.get(`${API_BASE_URL}admin/getAllOnsiteInspection`);
+
         if (response.data.success) {
           setBookingSessions(response.data.onsiteInspection);
-          console.log('Response:', response.data.onsiteInspection);
         } else {
           setError(response.data.message || 'Error fetching booking sessions');
         }
@@ -37,86 +37,86 @@ const OnlineInspection = () => {
   }, [expertId]);
 
   const columns = [
-    { field: '_id', headerName: 'ID', width: 200 },
-    { field: 'make', headerName: 'Make', width: 200 },
-    { field: 'model', headerName: 'Model', width: 200 },
-    { field: 'year', headerName: 'Year', width: 200 },
-    { field: 'vechicleVin', headerName: 'Vehicle VIN', width: 200 },
-    { field: 'body', headerName: 'Body', width: 200 },
-    { field: 'licensePlates', headerName: 'License Plates', width: 200 },
-    { field: 'handTruck', headerName: 'Hand Truck', width: 200 },
-    { field: 'glass', headerName: 'Glass', width: 200 },
-    { field: 'wiperBlades', headerName: 'Wiper Blades', width: 200 },
-    { field: 'Reflectors', headerName: 'Reflectors', width: 200 },
-    { field: 'mudFlaps', headerName: 'Mud Flaps', width: 200 },
-    { field: 'racking', headerName: 'Racking', width: 200 },
-    { field: 'coldCurtains', headerName: 'Cold Curtains', width: 200 },
-    { field: 'doorIssues', headerName: 'Door Issues', width: 200 },
-    { field: 'insurance', headerName: 'Insurance', width: 200 },
-    { field: 'headlights', headerName: 'Headlights', width: 200 },
-    { field: 'turnsignals', headerName: 'Turn Signals', width: 200 },
-    { field: 'makerlights', headerName: 'Maker Lights', width: 200 },
-    { field: 'brakeLights', headerName: 'Brake Lights', width: 200 },
-    { field: 'carImages', headerName: 'Car Images', width: 200 },
-    { field: 'RegistrationImages', headerName: 'Registration Images', width: 200 },
-    { field: 'Documents', headerName: 'Documents', width: 200 },
+    { field: '_id', headerName: t('columns.id'), width: 200 },
+    { field: 'make', headerName: t('columns.make'), width: 200 },
+    { field: 'model', headerName: t('columns.model'), width: 200 },
+    { field: 'year', headerName: t('columns.year'), width: 200 },
+    { field: 'vehicleVin', headerName: t('columns.vehicleVin'), width: 200 },
+    { field: 'body', headerName: t('columns.body'), width: 200 },
+    { field: 'licensePlates', headerName: t('columns.licensePlates'), width: 200 },
+    { field: 'handTruck', headerName: t('columns.handTruck'), width: 200 },
+    { field: 'glass', headerName: t('columns.glass'), width: 200 },
+    { field: 'wiperBlades', headerName: t('columns.wiperBlades'), width: 200 },
+    { field: 'reflectors', headerName: t('columns.reflectors'), width: 200 },
+    { field: 'mudFlaps', headerName: t('columns.mudFlaps'), width: 200 },
+    { field: 'racking', headerName: t('columns.racking'), width: 200 },
+    { field: 'coldCurtains', headerName: t('columns.coldCurtains'), width: 200 },
+    { field: 'doorIssues', headerName: t('columns.doorIssues'), width: 200 },
+    { field: 'insurance', headerName: t('columns.insurance'), width: 200 },
+    { field: 'headlights', headerName: t('columns.headlights'), width: 200 },
+    { field: 'turnSignals', headerName: t('columns.turnSignals'), width: 200 },
+    { field: 'makerLights', headerName: t('columns.makerLights'), width: 200 },
+    { field: 'brakeLights', headerName: t('columns.brakeLights'), width: 200 },
+    { field: 'carImages', headerName: t('columns.carImages'), width: 200 },
+    { field: 'registrationImages', headerName: t('columns.registrationImages'), width: 200 },
+    { field: 'documents', headerName: t('columns.documents'), width: 200 },
   ];
-  
 
   return (
     <div className="new">
-    <Sidebar />
-    <div className="newContainer">
-      <Navbar />
-      <div className="top">
-    <div className="datatable" style={{ height: 800 , width: '100%', marginTop: 20 }}>
-      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#1976d2', color: 'white' }}>All Onsite Inspection Data </div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : bookingSessions.length > 0 ? (
-        <DataGrid
-          rows={bookingSessions.map(session => ({
-            _id: session._id,
-            make: session.make,
-            model: session.model,
-            year: session.year,
-            vechicleVin: session.vechicleVin,
-            body: session.body,
-            licensePlates: session.licensePlates,
-            handTruck: session.handTruck,
-            glass: session.glass,
-            wiperBlades: session.wiperBlades,
-            Reflectors: session.Reflectors,
-            mudFlaps: session.mudFlaps,
-            racking: session.racking,
-            coldCurtains: session.coldCurtains,
-            doorIssues: session.doorIssues,
-            insurance: session.insurance,
-            headlights: session.headlights,
-            turnsignals: session.turnsignals,
-            makerlights: session.makerlights,
-            brakeLights: session.brakeLights,
-            carImages: session.carImages,
-            RegistrationImages: session.RegistrationImages,
-            Documents: session.Documents,
-            poster: session.poster
-          }))}
-          columns={columns}
-          pageSize={9}
-          rowsPerPageOptions={[9]}
-          checkboxSelection
-          getRowId={(row) => row._id}
-        />
-      ) : (
-        <p>No Onsite Inspection data available</p>
-      )}
+      <Sidebar />
+      <div className="newContainer">
+        <Navbar />
+        <div className="top">
+          <div className="datatable" style={{ height: 800, width: '100%', marginTop: 20 }}>
+            <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center',  alignItems: 'center', color: 'black' ,fontSize: 30, fontWeight: 'bold' }}>
+              {t('Onsite Inspections')}
+            </div>
+            {loading ? (
+              <p>{t('loading')}</p>
+            ) : error ? (
+              <p>{error}</p>
+            ) : bookingSessions.length > 0 ? (
+              <DataGrid
+                rows={bookingSessions.map(session => ({
+                  _id: session._id,
+                  make: session.make,
+                  model: session.model,
+                  year: session.year,
+                  vehicleVin: session.vehicleVin,
+                  body: session.body,
+                  licensePlates: session.licensePlates,
+                  handTruck: session.handTruck,
+                  glass: session.glass,
+                  wiperBlades: session.wiperBlades,
+                  reflectors: session.reflectors,
+                  mudFlaps: session.mudFlaps,
+                  racking: session.racking,
+                  coldCurtains: session.coldCurtains,
+                  doorIssues: session.doorIssues,
+                  insurance: session.insurance,
+                  headlights: session.headlights,
+                  turnSignals: session.turnSignals,
+                  makerLights: session.makerLights,
+                  brakeLights: session.brakeLights,
+                  carImages: session.carImages,
+                  registrationImages: session.registrationImages,
+                  documents: session.documents,
+                  poster: session.poster,
+                }))}
+                columns={columns}
+                pageSize={9}
+                rowsPerPageOptions={[9]}
+                checkboxSelection
+                getRowId={(row) => row._id}
+              />
+            ) : (
+              <p>{t('noOnsiteInspectionData')}</p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-        
-    </div>
-  </div>
   );
 };
 

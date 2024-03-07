@@ -3,6 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useParams } from 'react-router-dom';
 import Navbar from '../navbar/Navbar';
 import Sidebar from '../sidebar/Sidebar';
+import {API_BASE_URL} from "../../api"
 
 import axios from 'axios';
 
@@ -17,7 +18,7 @@ const OnlineInspectionData = () => {
     const fetchBookingSessions = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://kukuk-backend-ealq.vercel.app/api/v1/admin/expert/${expertId}/OnsiteInspectionForExpert`);
+        const response = await axios.get(`${API_BASE_URL}admin/expert/${expertId}/OnsiteInspectionForExpert`);
         
         if (response.data.success) {
           setBookingSessions(response.data.onsiteInspection);
@@ -70,7 +71,7 @@ const OnlineInspectionData = () => {
       <Navbar />
       <div className="top">
     <div className="datatable" style={{ height: 800 , width: '100%', marginTop: 20 }}>
-      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#1976d2', color: 'white' }}>All Onsite Inspection Data </div>
+      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center',  alignItems: 'center', color: 'black' ,fontSize: 30, fontWeight: 'bold' }}>All Onsite Inspection Data </div>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (

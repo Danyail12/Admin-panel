@@ -7,14 +7,12 @@ import { useNavigate } from "react-router-dom";
 import {API_BASE_URL} from "../../api"
 import axios from "axios";
 
-const CreateToEbook = ({ inputs, title }) => {
+const CreateToCourses = ({ inputs, title }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    category: "",
-    createby: "",
     price: "",
   });
 
@@ -27,36 +25,45 @@ const CreateToEbook = ({ inputs, title }) => {
       [fieldName]: fieldValue,
     });
   };
+  
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { name, description, category, createby, price } = formData;
-
-    // if (!name || !description || !category || !createby || !price) {
-    //   return alert("All fields are required.");
-    // }
-
     try {
-     
+      
       // Make a POST request to your backend API
-      const response = await axios.post(`${API_BASE_URL}createEbook`, formData ,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-      );
+      const response = await axios.post(
+        `${API_BASE_URL}createProduct`,
+        formData ,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+        );
+        
+        console.log(response.data);
+      console.log(response);
+
       if (response.data.success) {
-        alert("book created successfully.");
+        alert("Product created successfully.");
         // Additional logic or redirection can be added here after successful creation
-        navigate("/Booking");
+        navigate("/product");
+        setFormData({
+            name: "",
+            description: "",
+            price: "",
+        });
       } else {
-        alert("Failed to create course.");
+        alert("Failed to create Product.");
       }
     } catch (error) {
-      console.error("Error creating course:", error);
-      alert("An error occurred while creating the course.");
+      console.error("Error creating Product:", error);
+      alert("An error occurred while creating the Product.");
     }
   };
 
@@ -113,7 +120,8 @@ const CreateToEbook = ({ inputs, title }) => {
         </div>
       </div>
     </div>
-  </div>  );
+  </div>
+);
 };
 
-export default CreateToEbook;
+export default CreateToCourses;

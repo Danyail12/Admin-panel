@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../navbar/Navbar';
 import Sidebar from '../sidebar/Sidebar';
 import {API_BASE_URL} from "../../api"
-
 import axios from 'axios';
 
 const PocketGarrageData = () => {
@@ -18,10 +17,10 @@ const PocketGarrageData = () => {
     const fetchBookingSessions = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${API_BASE_URL}admin/expert/${expertId}/getallPocketGarrageForExpert`);
+        const response = await axios.get(`${API_BASE_URL}admin/getallPocketGarrage`);
         
         if (response.data.success) {
-          setBookingSessions(response.data.onsiteInspection);
+          setBookingSessions(response.data.pocketGarrage);
           console.log('Response:', response.data);
         } else {
           setError(response.data.message || 'Error fetching booking sessions');
@@ -66,7 +65,7 @@ const PocketGarrageData = () => {
       <Navbar />
       <div className="top">
     <div className="datatable" style={{ height: 800 , width: '100%', marginTop: 20 }}>
-      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black' ,fontSize: 30, fontWeight: 'bold' }}>All Pocket Garrage Data </div>
+      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center',  alignItems: 'center', color: 'black' ,fontSize: 30, fontWeight: 'bold' }}>All Pocket Garrage Data </div>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -99,7 +98,7 @@ const PocketGarrageData = () => {
   getRowId={(row) => row._id}
 />
       ) : (
-        <p>No booking session data available</p>
+        <p>No Pocket Garrage data available</p>
       )}
     </div>
   </div>

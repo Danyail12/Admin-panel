@@ -4,6 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
+import {API_BASE_URL} from "../../api"
 import axios from 'axios';
 
 
@@ -34,7 +35,7 @@ const NewEbook = ({ inputs, title }) => {
       // const yourAuthToken = `Bearer ${authToken}`;
       
       const response = await axios.post(
-        `https://kukuk-backend-ealq.vercel.app/api/v1/ebook/${id}`,
+        `${API_BASE_URL}ebook/${id}`,
         lectureData,
         {
           headers: {

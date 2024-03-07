@@ -3,20 +3,19 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 const resources = {
-    en: {
-      translation: {
-        dashboard: 'Dashboard',
-        users: 'Users',
-        expert: 'Expert',
-        products: 'Products',
-        ebooks: 'EBooks',
-        courses: 'Courses',
-        coursesService: 'Courses',
-        onlineInspection: 'Online inspection',
-        onsiteInspection: 'Onsite inspection',
-        profile: 'Profile',
-        logout: 'Logout',
-      },
+  en: {
+    translation: {
+      dashboard: 'Dashboard',
+      users: 'Users',
+      expert: 'Expert',
+      products: 'Products',
+      ebooks: 'EBooks',
+      courses: 'Courses',
+      coursesService: 'Courses',
+      onlineInspection: 'Online inspection',
+      onsiteInspection: 'Onsite inspection',
+      profile: 'Profile',
+      logout: 'Logout',
       widgets: {
         user: 'Users',
         expert: 'Experts',
@@ -26,42 +25,105 @@ const resources = {
         onsiteInspections: 'Onsite Inspections',
         pocketGarrage: 'Pocket Garrage',
       },
-    },
-    de: {
-      translation: {
-        dashboard: 'Instrumententafel',
-        users: 'Benutzer',
-        expert: 'Experte',
-        products: 'Produkte',
-        ebooks: 'E-Books',
-        courses: 'Kurse',
-        coursesService: 'Kurse',
-        onlineInspection: 'Online-Inspektion',
-        onsiteInspection: 'Vor-Ort-Inspektion',
-        profile: 'Profil',
-        logout: 'Abmelden',
+      columns: {
+        id: 'ID',
+        make: 'Make',
+        model: 'Model',
+        year: 'Year',
+        vehicleVin: 'Vehicle VIN',
+        body: 'Body',
+        licensePlates: 'License Plates',
+        handTruck: 'Hand Truck',
+        glass: 'Glass',
+        wiperBlades: 'Wiper Blades',
+        reflectors: 'Reflectors',
+        mudFlaps: 'Mud Flaps',
+        racking: 'Racking',
+        coldCurtains: 'Cold Curtains',
+        doorIssues: 'Door Issues',
+        insurance: 'Insurance',
+        headlights: 'Headlights',
+        turnSignals: 'Turn Signals',
+        makerLights: 'Maker Lights',
+        brakeLights: 'Brake Lights',
+        carImages: 'Car Images',
+        registrationImages: 'Registration Images',
+        documents: 'Documents',
       },
+    },
+  },
+  de: {
+    translation: {
+      dashboard: 'Instrumententafel',
+      users: 'Benutzer',
+      expert: 'Experte',
+      products: 'Produkte',
+      ebooks: 'E-Books',
+      courses: 'Kurse',
+      coursesService: 'Kurse',
+      onlineInspection: 'Online-Inspektion',
+      onsiteInspection: 'Vor-Ort-Inspektion',
+      profile: 'Profil',
+      logout: 'Abmelden',
       widgets: {
         user: 'Benutzer',
-        Experts: 'Experten', // corrected from 'Experts'
+        Experts: 'Experten',
         earning: 'Einnahmen',
         bookingSessions: 'Buchungssitzungen',
         onlineInspections: 'Online-Inspektionen',
         onsiteInspections: 'Vor-Ort-Inspektionen',
         pocketGarrage: 'Taschengarage',
       },
+      columns: {
+        id: 'ID',
+        make: 'Hersteller',
+        model: 'Modell',
+        year: 'Jahr',
+        vehicleVin: 'Fahrzeug-VIN',
+        body: 'Karosserie',
+        licensePlates: 'Kennzeichen',
+        handTruck: 'Handwagen',
+        glass: 'Glas',
+        wiperBlades: 'Wischerblätter',
+        reflectors: 'Reflektoren',
+        mudFlaps: 'Spritzlappen',
+        racking: 'Regale',
+        coldCurtains: 'Kühlvorhänge',
+        doorIssues: 'Türprobleme',
+        insurance: 'Versicherung',
+        headlights: 'Scheinwerfer',
+        turnSignals: 'Blinker',
+        makerLights: 'Markierungsleuchten',
+        brakeLights: 'Bremslichter',
+        carImages: 'Auto-Bilder',
+        registrationImages: 'Zulassungsbilder',
+        documents: 'Dokumente',
+      },
+      columns: {
+        id: 'ID',
+        fullName: 'Vollständiger Name',
+        email: 'E-Mail',
+        city: 'Stadt',
+        country: 'Land',
+        specialization: 'Spezialisierung',
+        status: 'Status',
+        viewBookingSession: 'Buchungssitzung anzeigen',
+        viewOnlineInspection: 'Online-Inspektion anzeigen',
+        viewOnsiteInspection: 'Vor-Ort-Inspektion anzeigen',
+        viewPocketGarage: 'Taschengarage anzeigen',
+        delete: 'Löschen',
+      },
     },
-  };
-  
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: 'en',
-    keySeparator: false,
-    interpolation: {
-      escapeValue: false, // react already safes from xss
-    },
-  });
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: 'en',
+  keySeparator: false,
+  interpolation: {
+    escapeValue: false, // react already safes from xss
+  },
+});
 
 export default i18n;

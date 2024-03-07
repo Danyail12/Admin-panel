@@ -1,25 +1,47 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../navbar/Navbar";
+import Sidebar from "../sidebar/Sidebar";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 // import { userColumns } from "../../datatablesource";
 import { adminAPI } from "../../api";
+import { API_BASE_URL } from "../../api";
 import { Button, ButtonBase } from "@mui/material";
+import axios from "axios";
 
 const Datatable = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-
   useEffect(() => {
-    // Fetch all users from the backend when the component mounts
-    adminAPI.getAllUsers()
-      .then((response) => {
-        setData(response.success ? response.users : []);
-        console.log(response);
-      })
-      .catch((error) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}admin/users`);
+        console.log(response.data);
+  
+        // Check if the response data and users array are defined
+        if (response.data && response.data.users) {
+          const usersWithUserRole = response.data.users.filter(user => user.role === "user");
+  
+          if (usersWithUserRole.length > 0) {
+            setData(usersWithUserRole);
+          } else {
+            console.error('No users with the role "user" found');
+            setError('No users found with the role "user"');
+          }
+        } else {
+          console.error('Invalid response format:', response);
+          setError('Invalid response format');
+        }
+      } catch (error) {
         console.error('Error fetching users:', error);
-      });
+        setError('Error fetching users');
+      }
+    };
+  
+    fetchData();
   }, []);
+  
+  
   const handleDelete = (id) => {
     // Ensure id is defined and not an empty string
     const confirmDelete = window.confirm('Are you sure you want to delete this user?');
@@ -101,16 +123,18 @@ const Datatable = () => {
   
 
   return (
+    <div className="new">
+    <div className="newContainer">
+      <div className="top">
+    <div className="datatable" style={{  height: 200, width: '100%' }}>
+    <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center', color: 'black', fontSize: 30 , fontWeight: 'bold' }}>
     
-    <div className="datatable" style={{  height: 800, width: '100%', marginTop: 20 }}>
-    <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#1976d2', color: 'white' }}>
-      Add New User
-        <Link to="/users/new" className="link" style={{ textDecoration: 'none' }}>
-          Add New
-        </Link>
+        User Data    
       </div>
+     
       <DataGrid
         className="datagrid"
+        autoHeight
         rows={data}
         columns={columns.concat(actionColumn)}
         pageSize={9}
@@ -119,6 +143,9 @@ const Datatable = () => {
         getRowId={(row) => row._id}
       />
     
+    </div>
+    </div>
+    </div>
     </div>
   );
 };

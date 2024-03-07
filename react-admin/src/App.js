@@ -22,6 +22,9 @@ import { DarkModeContext } from "./context/darkModeContext";
 import Protected from "./components/Protected";
 import OnsiteInspection from "./components/datatable/OnsiteInspection";
 import Online from "./components/datatable/Online"; 
+import Pocket from "./components/datatable/Pocket";
+import Product from "./components/datatable/Product";
+import CreateToProduct from "./pages/new/CreateToProduct";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -42,12 +45,11 @@ function App() {
       element={<New inputs={userInputs} title="Add New User" />}
     />
   </Route>
-  <Route path="products">
-    <Route index element={<List />} />
-    <Route path=":productId" element={<Single />} />
+  <Route path="product">
+    <Route index element={<Protected><Product /></Protected >} />
     <Route
       path="new"
-      element={<New inputs={productInputs} title="Add New Product" />}
+      element={<CreateToProduct inputs={productInputs} title="Add New Product" />}
     />
   </Route>
   <Route path="expert">
@@ -93,6 +95,12 @@ function App() {
             </Route>
             <Route path="onsiteInspection">
               <Route index element={<Protected><OnsiteInspection /></Protected>}/>
+             
+
+            </Route>
+
+            <Route path="pocket">
+              <Route index element={<Protected><Pocket /></Protected>}/>
              
 
             </Route>
