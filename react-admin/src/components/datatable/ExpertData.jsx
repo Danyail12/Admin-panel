@@ -79,7 +79,7 @@ const ExpertData = () => {
   };
   const handleBlock = (id, currentStatus) => {
     const newStatus = currentStatus === "active" ? "Unactived" : "active"; // Corrected status handling
-    const url = `${API_BASE_URL}/expert/${currentStatus}/${id}`;
+    const url = `${API_BASE_URL}expert/${currentStatus}/${id}`;
   
     axios.put(url)
       .then((response) => {
