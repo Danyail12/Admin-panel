@@ -42,50 +42,105 @@ function App() {
     <Route path=":userId" element={<Protected><Single /></Protected>} />
     <Route
       path="new"
-      element={<New inputs={userInputs} title="Add New User" />}
+      element={<Protected>
+
+        <New inputs={userInputs} title="Add New User" />
+      </Protected> 
+        }
     />
   </Route>
   <Route path="product">
     <Route index element={<Protected><Product /></Protected >} />
     <Route
       path="new"
-      element={<CreateToProduct inputs={productInputs} title="Add New Product" />}
+      element={<Protected>
+
+        <CreateToProduct inputs={productInputs} title="Add New Product" />
+      </Protected> 
+        }
     />
   </Route>
   <Route path="expert">
     <Route index element={<Protected><ExpertData /></Protected>} />
-    <Route path="new" element={<New inputs={ExpertInputs} title="Add New Expert" />} />
-    <Route path="Edit" element={<Edit inputs={ExpertInputs} title="Edit Expert" />} />
+    <Route path="new" element={ <Protected>
+
+    <New inputs={ExpertInputs} title="Add New Expert" />
+    </Protected>
+    } />
+    <Route path="Edit" element={ 
+    
+    <Protected>
+
+    <Edit inputs={ExpertInputs} title="Edit Expert" />
+    </Protected>
+    
+    } />
     <Route
       path=":expertId/booking-sessions"
-      element={<BookingSessionData />}
+      element={
+        <Protected>  
+      <BookingSessionData />
+      </Protected>
+    }
     />
     <Route
       path=":expertId/online-inspections"
-      element={<OnlineInspectionData />}
+      element={
+        <Protected>  
+      <OnlineInspectionData />
+      </Protected>
+    }
     />
     <Route
       path=":expertId/onsite-inspections"
-      element={<OnsiteInspectionData />}
+      element={
+        <Protected>  
+      <OnsiteInspectionData />
+      </Protected>
+    }
     />
     <Route
       path=":expertId/pocket-garages"
-      element={<PocketGarageData />}
+      element={
+        <Protected>  
+      <PocketGarageData />
+      </Protected>
+    }
     />
   </Route>
   <Route path="Booking">
     <Route index element={<Protected><Booking /></Protected>} />
-    <Route path ="new" element={<CreateToEbook inputs={CreateInputs} title="Add New Booking" />} />
+    <Route path ="new" element={
+    <Protected>
+
+    <CreateToEbook inputs={CreateInputs} title="Add New Booking" />
+    </Protected>
+    
+    
+    } />
     {/* <Route path=":id" element={<NewEbook inputs={addToLectureInputs} title="Add New Booking />} /> */}
     <Route
       path=":id"
-      element={<NewEbook inputs={addToLectureInputs} title="Add New Ebook" />}
+      element={
+        <Protected>  
+      <NewEbook inputs={addToLectureInputs} title="Add New Ebook" />
+      </Protected>
+    }
     />
   </Route>
   <Route path="course">
               <Route index element={<Protected><Course /></Protected>}/>
-              <Route path="createcourse" element={<CreateToCourses inputs={CreateInputs} title="Create New Course " />} />
-              <Route path=":id" element={<NewCourse inputs={addToLectureInputs} title="Add New Courses" />} />
+              <Route path="createcourse" element={<Protected>
+                <CreateToCourses inputs={CreateInputs} title="Create New Course " />
+                </Protected>
+                } />
+              <Route path=":id" element={
+              <Protected>
+
+              <NewCourse inputs={addToLectureInputs} title="Add New Courses" />
+              </Protected>
+              
+              } />
 
             </Route>
             <Route path="onlineInspection">
