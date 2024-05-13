@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
- export const API_BASE_URL = 'https://kukuk-backend-ealq.vercel.app/api/v1/';
+ export const API_BASE_URL = 'https://kukuk-backend-a8br.vercel.app/api/v1/';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
