@@ -4,27 +4,24 @@ import Navbar from '../navbar/Navbar';
 import Sidebar from '../sidebar/Sidebar';
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
-import { IconButton } from '@mui/material';
+import { Button, IconButton, Checkbox } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {API_BASE_URL} from "../../api"
-import Checkbox from '@mui/material/Checkbox';
 import axios from "axios";
+import { API_BASE_URL } from "../../api";
 
 const ExpertData = () => {
   const [experts, setExperts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // const [show ,hide] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     const fetchExperts = async () => {
       try {
-        setLoading(true);
         const response = await axios.get(`${API_BASE_URL}getExperts`);
-        if (response.data) {
-          setExperts(response.data);
-          console.log('Response:', response.data);
+        if (response.data && response.data.success) {
+          setExperts(response.data.data); // Set the data correctly here
+          console.log('Response:', response.data.data);
         } else {
           setError(response.data.message || "Error fetching experts");
         }
@@ -35,10 +32,8 @@ const ExpertData = () => {
         setLoading(false);
       }
     };
-    
     fetchExperts();
   }, []);
-
 
   const handleDelete = (id) => {
     axios
@@ -54,8 +49,7 @@ const ExpertData = () => {
         console.error("Error deleting expert:", error);
         setError("Error deleting expert");
       });
-  }
-  const [selectedRows, setSelectedRows] = useState([]);
+  };
 
   const handleSelectionChange = (selectedIds) => {
     setSelectedRows(selectedIds);
@@ -66,21 +60,22 @@ const ExpertData = () => {
       .delete(`${API_BASE_URL}admin/multipleDeleteForProducts`, { data: { ids: selectedRows } })
       .then((response) => {
         if (response.data.success) {
-          const updatedProducts = experts.filter(product => !selectedRows.includes(product._id));
+          const updatedProducts = experts.filter(expert => !selectedRows.includes(expert._id));
           setExperts(updatedProducts);
         } else {
-          setError(response.data.message || "Error deleting Products");
+          setError(response.data.message || "Error deleting products");
         }
       })
       .catch((error) => {
-        console.error("Error deleting Products:", error.response ? error.response.data : error.message);
-        setError("Error deleting Products. Please check the console for details.");
+        console.error("Error deleting products:", error.response ? error.response.data : error.message);
+        setError("Error deleting products. Please check the console for details.");
       });
   };
+
   const handleBlock = (id, currentStatus) => {
-    const newStatus = currentStatus === "active" ? "Unactived" : "active"; // Corrected status handling
-    const url = `${API_BASE_URL}expert/${currentStatus}/${id}`;
-  
+    const newStatus = currentStatus === "active" ? "unactive" : "active";
+    const url = `${API_BASE_URL}expert/${currentStatus === "active" ? "unactive" : "active"}/${id}`;
+
     axios.put(url)
       .then((response) => {
         if (response.data.success) {
@@ -98,19 +93,17 @@ const ExpertData = () => {
         setError(`Error updating expert status for ID ${id}. Please check the console for details.`);
       });
   };
-   
 
-  
   const columns = [
     {
       field: "selection",
       headerName: "Selection",
       width: 100,
-      renderHeader: (params) => (
+      renderHeader: () => (
         <Checkbox
           onChange={(e) =>
             handleSelectionChange(
-              e.target.checked ? experts.map((course) => course._id) : []
+              e.target.checked ? experts.map((expert) => expert._id) : []
             )
           }
         />
@@ -128,7 +121,6 @@ const ExpertData = () => {
         />
       ),
     },
-
     { field: "_id", headerName: "ID", width: 200 },
     { field: "fullName", headerName: "Full Name", width: 200 },
     { field: "email", headerName: "Email", width: 200 },
@@ -136,131 +128,117 @@ const ExpertData = () => {
     { field: "country", headerName: "Country", width: 200 },
     { field: "specialization", headerName: "Specialization", width: 200 },
     { field: "status", headerName: "Status", width: 200 },
-        {
-      field: "view Booking Session",
-      headerName: "view Booking Session",
+    {
+      field: "viewBookingSession",
+      headerName: "View Booking Session",
       width: 200,
       renderCell: (params) => (
-        <div>
-          <Button variant="contained" href="#contained-buttons" className="button" size="small" >
-
-          <Link to={`/expert/${params.row._id}/booking-sessions`} style={{ textDecoration: "none" }}>View</Link>
-          </Button>
-        </div>
+        <Button variant="contained" className="button" size="small">
+          <Link to={`/expert/${params.row._id}/booking-sessions`} style={{ textDecoration: "none", color: 'white' }}>
+            View
+          </Link>
+        </Button>
       ),
     },
     {
-      field: "view online Inspection",
-      headerName: "view online Inspection",
+      field: "viewOnlineInspection",
+      headerName: "View Online Inspection",
       width: 200,
       renderCell: (params) => (
-        <div>
-           <Button variant="contained" href="#contained-buttons" className="button" size="small" >
-
-          <Link to={`/expert/${params.row._id}/online-inspections`}style={{ textDecoration: "none" }}>View</Link>
-          </Button>
-        </div>
+        <Button variant="contained" className="button" size="small">
+          <Link to={`/expert/${params.row._id}/online-inspections`} style={{ textDecoration: "none", color: 'white' }}>
+            View
+          </Link>
+        </Button>
       ),
     },
     {
-      field: "view onsite Inspection",
-      headerName: "view onsite Inspection",
+      field: "viewOnsiteInspection",
+      headerName: "View Onsite Inspection",
       width: 200,
       renderCell: (params) => (
-        <div>
-           <Button variant="contained" href="#contained-buttons" className="button" size="small" >
-
-          <Link to={`/expert/${params.row._id}/onsite-inspections`}style={{ textDecoration: "none" }}>View</Link>
-          </Button>
-        </div>
+        <Button variant="contained" className="button" size="small">
+          <Link to={`/expert/${params.row._id}/onsite-inspections`} style={{ textDecoration: "none", color: 'white' }}>
+            View
+          </Link>
+        </Button>
       ),
     },
     {
-      field: "view Pocket Garage",
-      headerName: "view Pocket Garage",
+      field: "viewPocketGarage",
+      headerName: "View Pocket Garage",
       width: 200,
       renderCell: (params) => (
-        <div>
-           <Button variant="contained" href="#contained-buttons" className="button" size="small" >
-
-          <Link to={`/expert/${params.row._id}/pocket-garages`}  style={{ textDecoration: "none" }}>View</Link>
-          </Button>
-        </div>
+        <Button variant="contained" className="button" size="small">
+          <Link to={`/expert/${params.row._id}/pocket-garages`} style={{ textDecoration: "none", color: 'white' }}>
+            View
+          </Link>
+        </Button>
       ),
-      
     },
     {
       field: "Delete",
       headerName: "Delete",
       width: 200,
       renderCell: (params) => (
-        <div>
-          <IconButton aria-label="delete" onClick={() => handleDelete(params.row._id)}>
-            <DeleteIcon />
-          </IconButton>
-        </div>
+        <IconButton aria-label="delete" onClick={() => handleDelete(params.row._id)}>
+          <DeleteIcon />
+        </IconButton>
       ),
     },
     {
-      field: "Block/Unblock",
+      field: "BlockUnblock",
       headerName: "Block/Unblock",
       width: 200,
       renderCell: (params) => (
-        <div>
-          <Button onClick={() => handleBlock(params.row._id, params.row.status)}>
-            {params.row.status === "active" ? "Unactived" : "active"}
-          </Button>
-        </div>
+        <Button onClick={() => handleBlock(params.row._id, params.row.status)}>
+          {params.row.status === "active" ? "Unactived" : "Active"}
+        </Button>
       ),
     },
-    
   ];
 
   return (
     <div className="new">
-    <Sidebar />
-    <div className="newContainer">
-      <Navbar />
-      <div className="top">
-
-      <div className="datatable" style={{  height: 200, width: '100%' }}>
-      <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center',  color: 'black', fontWeight: 'bold', fontSize: 30 }}>
-             
-             Expert Data
-              </div>
-      <Button variant="contained"  className="button" size="small" >
-
-        <Link to="/expert/new" style={{ textDecoration: "none", color: 'white' }}>Add New Expert</Link>
-        </Button> 
-      
-      <IconButton aria-label="delete" onClick={() => handleMultipleDelete()}>
-                <DeleteIcon />
-              </IconButton>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : experts.length > 0 ? (
-        <DataGrid
-        className="datagrid"
-        autoHeight
-          rows={experts}
-          columns={columns}
-          pageSize={9}
-          rowsPerPageOptions={[9]}
-          checkboxSelection
-          getRowId={(row) => row._id}
-          />
-          ) : (
-            <p>No expert data available</p>
+      <Sidebar />
+      <div className="newContainer">
+        <Navbar />
+        <div className="top">
+          <div className="datatable" style={{ height: '100%', width: '100%' }}>
+            <div className="datatableTitle" style={{ display: 'flex', justifyContent: 'center', color: 'black', fontWeight: 'bold', fontSize: 30 }}>
+              Expert Data
+            </div>
+            <Button variant="contained" className="button" size="small">
+              <Link to="/expert/new" style={{ textDecoration: "none", color: 'white' }}>
+                Add New Expert
+              </Link>
+            </Button>
+            <IconButton aria-label="delete" onClick={handleMultipleDelete}>
+              <DeleteIcon />
+            </IconButton>
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>{error}</p>
+            ) : experts.length > 0 ? (
+              <DataGrid
+                className="datagrid"
+                autoHeight
+                rows={experts}
+                columns={columns}
+                pageSize={9}
+                rowsPerPageOptions={[9]}
+                checkboxSelection
+                getRowId={(row) => row._id}
+              />
+            ) : (
+              <p>No expert data available</p>
             )}
+          </div>
+        </div>
+      </div>
     </div>
-    </div>
-    </div>
-    </div>
-
-
-);
+  );
 };
 
 export default ExpertData;
