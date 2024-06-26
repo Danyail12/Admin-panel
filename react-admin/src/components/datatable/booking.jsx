@@ -19,7 +19,14 @@ const Booking = () => {
     title: "",
     description: "",
   });
+  const ImageComponent = ({ src }) => {
+    return <img src={src} alt="Example"
+      style={{ width: '100%', height: 'auto', objectFit: 'cover' }} 
+      
+    />;
+  };
 
+  const imgSrc = '/pics/course.jpg';
 
   useEffect(() => {
     const fetchBookingSessions = async () => {
@@ -130,7 +137,7 @@ const Booking = () => {
     { field: 'Price', headerName: 'Price', width: 200 },
     { field: 'numOfEbooks', headerName: 'Number of eBooks', width: 200 },
     { field: 'fullBook', headerName: 'Full Book', width: 200 },
-    { field: 'poster', headerName: 'Poster', width: 200, renderCell: (params) => <img src={params.row.poster.url} alt="Poster" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> },
+    { field: 'poster', headerName: 'Poster', width: 200, renderCell: (params) => <ImageComponent src={imgSrc}  /> },
     {
       field: "Delete",
       headerName: "Delete",

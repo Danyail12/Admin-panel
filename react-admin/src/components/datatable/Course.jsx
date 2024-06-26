@@ -10,7 +10,15 @@ import {API_BASE_URL} from "../../api"
 import Checkbox from '@mui/material/Checkbox';
 import axios from 'axios';
 
+const ImageComponent = ({ src }) => {
+  return <img src={src} alt="Example"
+    style={{ width: '100%', height: 'auto', objectFit: 'cover' }} 
+    
+  />;
+};
 const Course = () => {
+  const imgSrc = '/pics/course.jpg';
+
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,7 +27,7 @@ const Course = () => {
     description: "",
   });
 
-
+  
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -39,7 +47,7 @@ const Course = () => {
         setLoading(false);
       }
     };
-
+    
     fetchCourses();
   }, []);
   const handleAddLecture = async (id) => {
@@ -126,7 +134,8 @@ const Course = () => {
     { field: 'stars', headerName: 'Stars', width: 200 },
     { field: 'numOfVideos', headerName: 'Number of Videos', width: 200 },
     { field: 'views', headerName: 'Views', width: 200 },
-    { field: 'poster', headerName: 'Poster', width: 200, renderCell: (params) => <img src={params.row.poster.url} alt="Poster" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> },
+    { field: 'poster', headerName: 'Poster', width: 200, renderCell: (params) =>  <ImageComponent src={imgSrc}   />
+   },
     {
         field: "Delete",
         headerName: "Delete",
@@ -192,6 +201,7 @@ const Course = () => {
       ) : error ? (
         <p>{error}</p>
       ) : courses.length > 0 ? (
+        <>
         <DataGrid
           rows={courses.map(course => ({ _id: course._id, ...course, poster: course.poster }))}
           columns={columns}
@@ -199,7 +209,8 @@ const Course = () => {
           rowsPerPageOptions={[9]}
           checkboxSelection
           getRowId={(row) => row._id}
-        />
+          />
+          </>
       ) : (
         <p>No course data available</p>
       )}
