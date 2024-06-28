@@ -9,12 +9,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import { API_BASE_URL } from "../../api";
 
+const ImageComponent = ({ src }) => {
+return <img src={src} alt="Example"
+style={{ width: '75%', height: '75%', objectFit: 'fill' }} 
+
+/>;
+};
 const ExpertData = () => {
+  const imgSrc = '/pics/images.jpeg';
+  
   const [experts, setExperts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
-
   useEffect(() => {
     const fetchExperts = async () => {
       try {
@@ -122,7 +129,8 @@ const ExpertData = () => {
       ),
     },
     { field: "_id", headerName: "ID", width: 200 },
-    { field: "fullName", headerName: "Full Name", width: 200 },
+    { field: 'image', headerName: 'Image', width: 200, renderCell: (params) =>  <ImageComponent src={imgSrc}   />
+  },
     { field: "email", headerName: "Email", width: 200 },
     { field: "city", headerName: "City", width: 200 },
     { field: "country", headerName: "Country", width: 200 },
